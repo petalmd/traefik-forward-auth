@@ -4,14 +4,15 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/containous/traefik/v2/pkg/rules"
 	"github.com/sirupsen/logrus"
 	"github.com/thomseddon/traefik-forward-auth/internal/provider"
+	traefikMuxer "github.com/traefik/traefik/v2/pkg/muxer/http"
 )
 
 // Server contains router and handler methods
 type Server struct {
-	router *rules.Router
+	//router *rules.Router
+	router *traefikMuxer.Muxer
 }
 
 // NewServer creates a new server object and builds router
@@ -23,7 +24,7 @@ func NewServer() *Server {
 
 func (s *Server) buildRoutes() {
 	var err error
-	s.router, err = rules.NewRouter()
+	s.router, err = traefikMuxer.NewMuxer()
 	if err != nil {
 		log.Fatal(err)
 	}
